@@ -25,9 +25,14 @@ while running:
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             item = simpledialog.askstring('Space', 'Nome da estrela: ')
-            print(item)
-            if item == None:
+            if item != None:
+                arquivo = open('arquivo.txt', 'w')
+                arquivo.write(item)
+                arquivo.close()
+            elif item == None:
                 item = 'Desconhecido' + str(pos)
+            pygame.draw.circle(fundo, branco, pos, 5)
+            
             #estrelas[item] = pos
     
     tela.fill(branco)
