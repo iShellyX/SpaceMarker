@@ -1,40 +1,29 @@
 from tkinter import simpledialog
 import pygame
+from arquivo import ler_linha_arquivo
 pygame.init()
-
+pygame.font.init()
 tamanho = (1000,563)
 branco = (255,255,255)
 icone = pygame.image.load('space.png')
 fundo = pygame.image.load('bg.jpg')
 clock = pygame.time.Clock()
-font = pygame.font.SysFont("Monospace", 15, True, True)
-texto = 0
-coordenada = 0
-cadela = False
-
-
+fonte = pygame.font.get_default_font() 
+fontesys = pygame.font.SysFont(fonte, 30)
+deus = False
+primeira = 0
+segunda = 1
 running = True
 pygame.display.set_caption('Space Marker')
 tela = pygame.display.set_mode(tamanho)
 pygame.display.set_icon(icone)
 pygame.mixer.music.load('Space_Machine_Power.mp3')
 pygame.mixer.music.play(-1)
-
+tela.fill(branco)
+tela.blit( fundo, (0,0) )
 
 while running:
-    if cadela == True:
-        arquivo = open('nome.txt', 'r')
-        arquivo = arquivo.readlines(1)
-        arquivo = "".join(arquivo)
-        posicao = open('nome.txt', 'r')
-        posicao = posicao.readlines(2)
-        posicao = "".join(posicao)
-        coordenada = int(posicao)
-        if coordenada > 0:
-            coordenada = tuple(coordenada)
-            texto = font.render(arquivo + posicao, False, (255, 255, 255))
-            tela.blit(texto, coordenada)
-    
+
 
 
     for event in pygame.event.get():
@@ -42,28 +31,41 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             running = False
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_F1:
+            arquivo = ler_linha_arquivo("nome.txt", primeira)
+            arquivo = "".join(arquivo)
+            posicao = ler_linha_arquivo("nome.txt", segunda)
+            coordenada = list(posicao)
+            coordenadax = coordenada[1] + coordenada[2] + coordenada[3]
+            coordenaday = coordenada[6] + coordenada[7] + coordenada[8]
+            coordenada = (int(coordenadax), int(coordenaday))
+            
+            texto = fontesys.render(arquivo + posicao, False, 5, branco)
+            tela.blit(texto, coordenada)
+            pygame.draw.circle(tela, branco, coordenada, 5)
+            primeira = primeira + 2
+            segunda = segunda + 2
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             item = simpledialog.askstring('Space', 'Nome da estrela: ')
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_F1:
-            cadela = True
-            
             if item != None:
                 pos1 = item + "\n" + str(pos)
                 arquivo = open('nome.txt', 'a+')
                 arquivo.write(pos1 + '\n')
                 arquivo.close()
+                texto = fontesys.render(pos1, 1, branco)
+                tela.blit(texto, pos)
+                deus = True
 
-                pygame.draw.circle(fundo, branco, pos, 5)
+                pygame.draw.circle(tela, branco, pos, 5)
                 
             elif item == None:
                 item = 'Desconhecido' + str(pos)
             
-            
-            #estrelas[item] = pos
     
-    tela.fill(branco)
-    tela.blit( fundo, (0,0) )
+
+    if deus == True:
+        tela.blit(texto, pos)
      
     
     
