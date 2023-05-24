@@ -1,24 +1,27 @@
 from tkinter import simpledialog
 import pygame
-from arquivo import ler_linha_arquivo, ler_arquivo
+from arquivo import ler_linha_arquivo, ler_arquivo, salvar
 pygame.init()
 pygame.font.init()
+
 tamanho = (1000,563)
 branco = (255,255,255)
 icone = pygame.image.load('space.png')
 fundo = pygame.image.load('bg.jpg')
 clock = pygame.time.Clock()
 fonte = pygame.font.get_default_font() 
-fontesys = pygame.font.SysFont(fonte, 30)
+fontesys = pygame.font.SysFont(fonte, 20)
 primeira = 0
 segunda = 1
 running = True
 true = False
-pygame.display.set_caption('Space Marker')
 tela = pygame.display.set_mode(tamanho)
+
+pygame.display.set_caption('Space Marker')
 pygame.display.set_icon(icone)
 pygame.mixer.music.load('Space_Machine_Power.mp3')
 pygame.mixer.music.play(-1)
+
 tela.fill(branco)
 tela.blit( fundo, (0,0) )
 
@@ -26,22 +29,12 @@ while running:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            arquivo = open('memoria.txt', 'r')
-            arquivo = arquivo.read()
-            arquivo = "".join(arquivo)
-            arquivo2 = open("nome.txt", 'a+')
-            arquivo2.write(arquivo)
-            arquivo2.close()
+            salvar()
             ler_arquivo("memoria.txt")
             running = False
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            arquivo = open('memoria.txt', 'r')
-            arquivo = arquivo.read()
-            arquivo = "".join(arquivo)
-            arquivo2 = open("nome.txt", 'a+')
-            arquivo2.write(arquivo)
-            arquivo2.close()
+            salvar()
             ler_arquivo("memoria.txt")
             running = False
 
@@ -66,7 +59,6 @@ while running:
                     pygame.draw.circle(tela, branco, coordenada, 5)
                     primeira = primeira + 2
                     segunda = segunda + 2
-
                 except:
                     true = False
                     
@@ -91,13 +83,9 @@ while running:
                 tela.blit(texto, pos)
                 pygame.draw.circle(tela, branco, pos, 5)
 
+
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F3:
-            arquivo = open('memoria.txt', 'r')
-            arquivo = arquivo.read()
-            arquivo = "".join(arquivo)
-            arquivo2 = open("nome.txt", 'a+')
-            arquivo2.write(arquivo)
-            arquivo2.close()
+            salvar()
             ler_arquivo("memoria.txt")
 
 
