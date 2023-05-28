@@ -1,7 +1,7 @@
 from tkinter import simpledialog
 import pygame 
 
-from arquivo import ler_linha_arquivo, ler_arquivo, salvar, linha
+from arquivo import ler_arquivo, salvar, linha, circulo
 pygame.init()
 pygame.font.init()
 
@@ -48,25 +48,17 @@ while running:
 
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F1:
+            nome = "nome.txt"
             true = True
             while true:
                 try:
-                    arquivo = ler_linha_arquivo("nome.txt", primeira)
-                    arquivo = "".join(arquivo)
-                    posicao = ler_linha_arquivo("nome.txt", segunda)
-                    coordenada = list(posicao)
-                    coordenadax = coordenada[1] + coordenada[2] + coordenada[3]
-                    coordenaday = coordenada[6] + coordenada[7] + coordenada[8]
-                    coordenada = (int(coordenadax), int(coordenaday))
-                    texto = fontesys.render(arquivo + posicao, 1, branco)
-                    tela.blit(texto, coordenada)
-                    pygame.draw.circle(tela, branco, coordenada, 5)
-                    primeira = primeira + 2
-                    segunda = segunda + 2
+                    circulo(tela, branco, primeira2, nome)
+                    linha(tela, branco, primeira2, segunda2, nome)
+                    primeira2 = primeira2 +2
+                    segunda2 = segunda2 +2
                 except:
                     true = False
 
-                    
         elif event.type == pygame.MOUSEBUTTONUP:
             try:
                 pos = pygame.mouse.get_pos()
@@ -81,7 +73,8 @@ while running:
                     pygame.draw.circle(tela, branco, pos, 5)
                     pontos = pontos +1
                     if pontos >= 2:
-                        linha(tela, branco, primeira2, segunda2)
+                        nome = "memoria.txt"
+                        linha(tela, branco, primeira2, segunda2, nome)
                         primeira2 = primeira2 + 2
                         segunda2 = segunda2 + 2
 
@@ -93,6 +86,13 @@ while running:
                     texto = fontesys.render('Desconhecido'+ str(pos), 1, branco)
                     tela.blit(texto, pos)
                     pygame.draw.circle(tela, branco, pos, 5)
+                    pontos = pontos +1
+                    if pontos >= 2:
+                        nome = "memoria.txt"
+                        linha(tela, branco, primeira2, segunda2, nome)
+                        primeira2 = primeira2 + 2
+                        segunda2 = segunda2 + 2
+                    
             except:
                 '''nada'''
 

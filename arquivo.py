@@ -22,21 +22,95 @@ def salvar():
     arquivo2.write(arquivo)
     arquivo2.close()
 
-def linha(tela, branco, primeira2, segunda2):
-    pontolinha1 = ler_linha_arquivo("memoria.txt", primeira2)
-    coordenada1 = list(pontolinha1)
-    if coordenada1[3] == ",":
-        coordenada1[3] = None
-    coordenadax = coordenada1[1] + coordenada1[2] + coordenada1[3]
-    coordenaday = coordenada1[6] + coordenada1[7] + coordenada1[8]
-    coordenada1 = (int(coordenadax), int(coordenaday))
+def linha(tela, branco, primeira2, segunda2, nome):
+    coordenadax = ""
+    coordenaday = ""
+    pontolinha1 = ler_linha_arquivo(nome, primeira2)
+    for i in pontolinha1:
+        if i == "(" or i == ")" or i == "\n" or i == " ":
+            i = ""
+        elif i == ",":
+            break
+        coordenadax = coordenadax + i
+    coordenadax = int(coordenadax)
+
+
+    for i in pontolinha1:
+        if i == "(" or i == ")" or i == "\n" or i == " ":
+            i = ""
+        elif i == ",":
+            coordenaday = ""
+            i = ""
+            
+        coordenaday = coordenaday + i
+    coordenaday = int(coordenaday)
     
-    pontolinha2 = ler_linha_arquivo("memoria.txt", segunda2)
-    coordenada2 = list(pontolinha2)
-    if coordenada2[3] == ",":
-        coordenadax = coordenada2[1] + coordenada2[2]
-    else:
-        coordenadax = coordenada2[1] + coordenada2[2] + coordenada2[3]
-    coordenaday = coordenada2[6] + coordenada2[7] + coordenada2[8]
-    coordenada2 = (int(coordenadax), int(coordenaday))
-    pygame.draw.line(tela, branco, (coordenada1), (coordenada2), 1)
+    ponto1 = (coordenadax, coordenaday)
+
+
+
+    coordenadax = ""
+    coordenaday = ""
+    pontolinha2 = ler_linha_arquivo(nome, segunda2)
+    for i in pontolinha2:
+        if i == "(" or i == ")" or i == "\n" or i == " ":
+            i = ""
+        elif i == ",":
+            break
+        coordenadax = coordenadax + i
+    coordenadax = int(coordenadax)
+
+
+    for i in pontolinha2:
+        if i == "(" or i == ")" or i == "\n" or i == " ":
+            i = ""
+        elif i == ",":
+            coordenaday = ""
+            i = ""
+            
+        coordenaday = coordenaday + i
+    coordenaday = int(coordenaday)
+    
+    ponto2 = (coordenadax, coordenaday)
+        
+
+    pygame.draw.line(tela, branco, (ponto1), (ponto2), 1)
+
+
+
+def circulo(tela, branco, primeira2, nome):
+    coordenadax = ""
+    coordenaday = ""
+    pontocirculo = ler_linha_arquivo(nome, primeira2)
+    for i in pontocirculo:
+        if i == "(" or i == ")" or i == "\n" or i == " ":
+            i = ""
+        elif i == ",":
+            break
+        coordenadax = coordenadax + i
+    coordenadax = int(coordenadax)
+
+
+    for i in pontocirculo:
+        if i == "(" or i == ")" or i == "\n" or i == " ":
+            i = ""
+        elif i == ",":
+            coordenaday = ""
+            i = ""
+    
+            
+        coordenaday = coordenaday + i
+    coordenaday = int(coordenaday)
+    
+    circulo = (coordenadax, coordenaday)
+
+    texto1 = ler_linha_arquivo(nome, (primeira2 -1))
+    
+    texto1 = texto1 + pontocirculo
+    fonte = pygame.font.get_default_font() 
+    fontesys = pygame.font.SysFont(fonte, 20)
+    texto = fontesys.render(texto1, 1, branco)
+    
+    tela.blit(texto, circulo)
+    pygame.draw.circle(tela, branco, circulo, 5)
+
