@@ -8,24 +8,18 @@ def ler_linha_arquivo(nome_arquivo, numero_linha):
             return linha_desejada
         else:
             return None
-
 def ler_arquivo(nome_arquivo,):
     with open(nome_arquivo, 'w') as arquivo:
         linhas = arquivo.write('')
         return linhas
-    
-def salvar():
-    arquivo = open('memoria.txt', 'r')
-    arquivo = arquivo.read()
-    arquivo = "".join(arquivo)
-    arquivo2 = open("nome.txt", 'a+')
-    arquivo2.write(arquivo)
-    arquivo2.close()
 
-def linha(tela, branco, primeira2, segunda2, nome):
+
+
+def linha(tela, branco, primeira2, segunda2):
     coordenadax = ""
     coordenaday = ""
-    pontolinha1 = ler_linha_arquivo(nome, primeira2)
+    pontolinha1 = ler_linha_arquivo("nome.txt", primeira2)
+
     for i in pontolinha1:
         if i == "(" or i == ")" or i == "\n" or i == " ":
             i = ""
@@ -33,8 +27,6 @@ def linha(tela, branco, primeira2, segunda2, nome):
             break
         coordenadax = coordenadax + i
     coordenadax = int(coordenadax)
-
-
     for i in pontolinha1:
         if i == "(" or i == ")" or i == "\n" or i == " ":
             i = ""
@@ -44,14 +36,12 @@ def linha(tela, branco, primeira2, segunda2, nome):
             
         coordenaday = coordenaday + i
     coordenaday = int(coordenaday)
-    
     ponto1 = (coordenadax, coordenaday)
 
 
-
     coordenadax = ""
     coordenaday = ""
-    pontolinha2 = ler_linha_arquivo(nome, segunda2)
+    pontolinha2 = ler_linha_arquivo("nome.txt", segunda2)
     for i in pontolinha2:
         if i == "(" or i == ")" or i == "\n" or i == " ":
             i = ""
@@ -59,8 +49,6 @@ def linha(tela, branco, primeira2, segunda2, nome):
             break
         coordenadax = coordenadax + i
     coordenadax = int(coordenadax)
-
-
     for i in pontolinha2:
         if i == "(" or i == ")" or i == "\n" or i == " ":
             i = ""
@@ -70,18 +58,20 @@ def linha(tela, branco, primeira2, segunda2, nome):
             
         coordenaday = coordenaday + i
     coordenaday = int(coordenaday)
-    
     ponto2 = (coordenadax, coordenaday)
         
-
     pygame.draw.line(tela, branco, (ponto1), (ponto2), 1)
 
 
 
-def circulo(tela, branco, primeira2, nome):
+
+def circulo(tela, branco, segunda1, primeira1):
     coordenadax = ""
-    coordenaday = ""
-    pontocirculo = ler_linha_arquivo(nome, primeira2)
+    coordenaday = ''
+    texto1 = ler_linha_arquivo("nome.txt", (primeira1))
+    pontocirculo = ler_linha_arquivo("nome.txt", segunda1)
+
+
     for i in pontocirculo:
         if i == "(" or i == ")" or i == "\n" or i == " ":
             i = ""
@@ -89,7 +79,6 @@ def circulo(tela, branco, primeira2, nome):
             break
         coordenadax = coordenadax + i
     coordenadax = int(coordenadax)
-
 
     for i in pontocirculo:
         if i == "(" or i == ")" or i == "\n" or i == " ":
@@ -103,9 +92,6 @@ def circulo(tela, branco, primeira2, nome):
     coordenaday = int(coordenaday)
     
     circulo = (coordenadax, coordenaday)
-
-    texto1 = ler_linha_arquivo(nome, (primeira2 -1))
-    
     texto1 = texto1 + pontocirculo
     fonte = pygame.font.get_default_font() 
     fontesys = pygame.font.SysFont(fonte, 20)
@@ -113,4 +99,3 @@ def circulo(tela, branco, primeira2, nome):
     
     tela.blit(texto, circulo)
     pygame.draw.circle(tela, branco, circulo, 5)
-
