@@ -43,6 +43,8 @@ pygame.display.set_icon(icone)
 pygame.mixer.music.load('Space_Machine_Power.mp3')
 pygame.mixer.music.play(-1)
 
+font = pygame.font.Font(None, 30)
+
 tela.fill(branco)
 tela.blit( fundo, (0,0) )
 
@@ -136,6 +138,15 @@ while running:
             except:
                 '''nada'''
 
+    texto = font.render("Pressione F1 para carregar pontos"  , True, branco)
+
+    textoDois = font.render("Pressione F2 para apagar os pontos", True, branco)
+
+    textoTres = font.render("Pressione F3 para salvar os pontos", True, branco)
+
+    tela.blit( texto, (10, 10) )
+    tela.blit( textoDois, (10, 35) )
+    tela.blit(textoTres, (10, 60))
     
     pygame.display.update()
     clock.tick(40)
